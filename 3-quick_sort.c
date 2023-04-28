@@ -9,7 +9,7 @@
  * Return: the place of the pivot
  */
 
-int partition(int *array, int l, int r)
+int partition(int *array, int l, int r, size_t size)
 {
 	int itr;
 	int pivot = array[r];
@@ -24,11 +24,13 @@ int partition(int *array, int l, int r)
 			temp = array[i];
 			array[i] = array[itr];
 			array[itr] = temp;
+			print_array((const int *)array, size);
 		}
 	}
 	temp = array[i + 1];
 	array[i + 1] = array[r];
 	array[r] = temp;
+	print_array((const int *)array, size);
 	return (i + 1);
 }
 
@@ -41,16 +43,16 @@ int partition(int *array, int l, int r)
  * Return: void
  */
 
-void qs(int *array, int l, int r)
+void qs(int *array, int l, int r, size_t size)
 {
 	int index;
 
 	if (l >= r)
 		return;
 
-	index = partition(array, l, r);
-	qs(array, l, index - 1);
-	qs(array, index + 1, r);
+	index = partition(array, l, r, size);
+	qs(array, l, index - 1, size);
+	qs(array, index + 1, r, size);
 }
 
 /**
@@ -67,5 +69,5 @@ void quick_sort(int *array, size_t size)
 	if (!array || !size)
 		return;
 
-	qs(array, 0, sizee - 1);
+	qs(array, 0, sizee - 1, size);
 }
