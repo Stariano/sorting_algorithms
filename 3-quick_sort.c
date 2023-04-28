@@ -29,7 +29,6 @@ int partition(int *array, int l, int r, size_t size)
 	temp = array[i + 1];
 	array[i + 1] = array[r];
 	array[r] = temp;
-	print_array((const int *)array, size);
 	return (i + 1);
 }
 
