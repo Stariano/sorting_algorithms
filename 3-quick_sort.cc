@@ -1,6 +1,20 @@
 #include "sort.h"
 
 /**
+ * swap_ints - Swap two integers in an array.
+ * @a: The first integer to swap.
+ * @b: The second integer to swap.
+ */
+void swap_ints(int *a, int *b)
+{
+	int tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+/**
  * partition - the main function the chooses the pivot
  *
  * @array: the array we need to work on
@@ -32,6 +46,32 @@ int partition(int *array, int l, int r, size_t size)
 	return (i + 1);
 }
 
+int partition(int *array, int left, int right, size_t size)
+{
+	int *pivot, above, below;
+
+	pivot = array + right;
+	for (above = below = left; below < right; below++)
+	{
+		if (array[below] < *pivot)
+		{
+			if (above < below)
+			{
+				swap_ints(array + below, array + above);
+				print_array(array, size);
+			}
+			above++;
+		}
+	}
+
+	if (array[above] > *pivot)
+	{
+		swap_ints(array + above, pivot);
+		print_array(array, size);
+	}
+
+	return (above);
+}
 /**
  * qs - recursive function to call partitiong function.
  *
@@ -64,7 +104,7 @@ void quick_sort(int *array, size_t size)
 {
 	int sizee = size;
 
-	if (!array || !size)
+	if (!array || size < 2)
 		return;
 
 	qs(array, 0, sizee - 1, size);
